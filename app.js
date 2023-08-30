@@ -45,6 +45,7 @@ async function myFunction() {
     console.log("Function executed!");
     console.log(data);
     const map= data.map(async(item)=>{
+      console.log(item.vehicle,item.email);
       await Mail(item.vehicle,item.email)
     })
     console.log(map);

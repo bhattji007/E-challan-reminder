@@ -3,7 +3,11 @@ import nodemailer from 'nodemailer';
 
 const Mail = async (vehicle, email) => {
   (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: process.env.CHROME_BIN || null,
+      args: ['--no-sandbox', '--headless', '--disable-gpu', '--disable-dev-shm-usage']
+    });
     const page = await browser.newPage();
   
     const url = `https://carinfo.app/challan-details/${vehicle}`;
