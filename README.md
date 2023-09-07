@@ -75,7 +75,6 @@ To start using Echallan-reminder, follow these steps:
 Echallan-reminder requires some initial configuration before use. Edit the `.env.example` file to include:
 
 - Your email address and SMTP server details for sending notifications.
-- The URL of the traffic authority's website to scrape challan details.
 - Any other relevant configuration parameters.
 
 
