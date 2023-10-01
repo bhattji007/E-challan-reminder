@@ -91,6 +91,16 @@ We welcome contributions from the community to make Echallan-reminder even bette
 Together, we can improve this tool and make a positive impact on how people manage their traffic challans.
 
 
+## Testing the current api 
+ The current code is deployed on https://echallan.onrender.com/api
+ Just hit a POST request with below json object in body
+ 
+ {
+   email:YOUR_EMAIL,
+   vehicle: YOUR_VEHICLE_NUMBER
+ }
+  
+
 ## Current Development Status and Planned Improvements
 
 Echallan-reminder is currently in the backend development stage, focusing on automating the process of fetching traffic challan data and sending email notifications. The backend functionalities are being implemented using Node.js and Puppeteer for web scraping, along with Gmail Nodemailer for sending notifications.
