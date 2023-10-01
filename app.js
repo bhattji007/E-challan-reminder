@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import userSchema from './models/userSchema.js';
 import Mail from './api/mail.js';
 import cors from 'cors';
+import { promiseHooks } from 'v8';
 const email=[]
 const vehicle =[]
 
@@ -45,12 +46,13 @@ async function myFunction() {
   try {
     const data = await userSchema.find(); // Use the User model here
     console.log("Function executed!");
-    console.log(data);
+    // console.log(data);
     const map= data.map(async(item)=>{
       console.log(item.vehicle,item.email);
       await Mail(item.vehicle,item.email)
     })
-    console.log(map);
+    const datas=await Promise.all(map);
+    console.log(datas)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
