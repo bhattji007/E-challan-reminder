@@ -19,7 +19,7 @@ const VehicleForm = () => {
     };
 
     // Replace this with your actual API endpoint
-    const apiUrl = 'https://example.com/api/submit-request';
+    const apiUrl = 'https://echallan.onrender.com/api';
 
     fetch(apiUrl, {
       method: 'POST',

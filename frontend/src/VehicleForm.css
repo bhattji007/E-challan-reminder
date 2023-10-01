@@ -45,7 +45,11 @@ body {
     border-radius: 8px;
   }
   
-  
+  .form-container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   .loader {
     border: 8px solid #f3f3f3;
