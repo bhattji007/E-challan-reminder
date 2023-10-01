@@ -71,7 +71,7 @@ async function myFunction() {
     // console.log(data);
     const map= data.map(async(item)=>{
       console.log(item.vehicle,item.email);
-      await Mail('UP25CD4533','shubhambhattrocks123@gmail.com');
+      await Mail(item.vehicle,item.email);
     })
     const datas= Promise.all(map);
     // console.log(datas)
