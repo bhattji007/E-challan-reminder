@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 import userSchema from './models/userSchema.js';
 import Mail from './api/mail.js';
 import cors from 'cors';
-import { promiseHooks } from 'v8';
 const email=[]
 const vehicle =[]
 
