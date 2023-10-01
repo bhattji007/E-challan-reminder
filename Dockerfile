@@ -28,7 +28,7 @@ USER pptruser
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json ./ 
 
 RUN yarn
 
