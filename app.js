@@ -25,17 +25,39 @@ mongoose.connect(process.env.MONGODB_URI,{
 
 
 app.post('/api',async(req,res)=>{
-  // console.log(req)
+  try{
   const email=req.body.email;
   const vehicle =req.body.vehicle.toUpperCase() ;
-  // console.log(vehicle,"API REQUEST");
-  const resData= await Mail(vehicle,email);
-  const data=await userSchema.insertMany({email, vehicle})
+  if (vehicle.length !== 10){
+    res.sendStatus(405);
+    return
+  }
+    const resData = await Mail(vehicle, email);
+    console.log('Response from Mail function:', resData);
+    if (resData === 'Email sent successfully!') {
+      console.log('Mail sent successfully.');
+      res.json({message:'Email sent successfully!',code:201})
+    } else if (resData === 'No pending challans.') {
+      res.json({message:'No pending challans.',code:202})
+    } else if (resData === 'Challan details not found.') {
+      res.json({message:'Challan details not found.',code:203})
+    }
+    else{
+      res.sendStatus(301);
+      return
+    }
+    // const existingData= await userSchema.find({email:email});
+    // const Data= existingData.map(item => );
+  const data=await userSchema.insertMany({email, vehicle});
   if (data){
      res.sendStatus(200);
   }
   else{
     res.sendStatus(400);
+  }
+  }
+  catch (e){
+    console.log(e);
   }
 });
 
@@ -49,10 +71,10 @@ async function myFunction() {
     // console.log(data);
     const map= data.map(async(item)=>{
       console.log(item.vehicle,item.email);
-      await Mail(item.vehicle,item.email)
+      await Mail('UP25CD4533','shubhambhattrocks123@gmail.com');
     })
     const datas= Promise.all(map);
-    console.log(datas)
+    // console.log(datas)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
