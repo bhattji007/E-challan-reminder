@@ -27,8 +27,9 @@ mongoose.connect(process.env.MONGODB_URI,{
 app.post('/api',async(req,res)=>{
   // console.log(req)
   const email=req.body.email;
-  const vehicle =req.body.vehicle;
-  const data=await userSchema.insertMany({email, vehicle})
+  const vehicle =req.body.vehicle.toUpperCase() ;
+  const resData= await Mail(vehicle, email );
+  // const data=await userSchema.insertMany({email, vehicle})
   if (data){
      res.sendStatus(200);
   }
