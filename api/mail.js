@@ -41,12 +41,15 @@ const Mail = async (vehicle, email) => {
             pass: process.env.PASSWORD,
           },
         });
-        
+        const currentTime = Date.now();
+        const currentDate = new Date(currentTime);
+        const formattedTime = currentDate.toLocaleTimeString(); 
+        const formattedDate = currentDate.toDateString(); 
         const mailOptions = {
           from: 'challanDeets@gmail.com',
           to: `${email}`,
           subject: 'Challan Details Alert',
-          text: `Challan details heading: ${challanDetailsHeading}\n  ${tableData.firstRow} ${tableData.lastRowLastColumn}`
+          text: `Challan details heading: ${challanDetailsHeading}\n${tableData.firstRow} ${tableData.lastRowLastColumn} \n This Mail wast sent on ${formattedDate} at ${formattedTime} \n Yours truly, \n E-Challan Reminder`
         };
         
          transporter.sendMail(mailOptions, (error, info) => {

@@ -28,8 +28,9 @@ app.post('/api',async(req,res)=>{
   // console.log(req)
   const email=req.body.email;
   const vehicle =req.body.vehicle.toUpperCase() ;
-  const resData= await Mail(vehicle, email );
-  // const data=await userSchema.insertMany({email, vehicle})
+  // console.log(vehicle,"API REQUEST");
+  const resData= await Mail(vehicle,email);
+  const data=await userSchema.insertMany({email, vehicle})
   if (data){
      res.sendStatus(200);
   }
@@ -50,17 +51,14 @@ async function myFunction() {
       console.log(item.vehicle,item.email);
       await Mail(item.vehicle,item.email)
     })
-    const datas=await Promise.all(map);
+    const datas= Promise.all(map);
     console.log(datas)
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
 
-// app.get('/api',async(req,res)=>{
-//   const ok= await myFunction();
-//   res.sendStatus(200);
-// });
+
 
 function scheduleFunction(intervalInHours, asyncFunc) {
   const millisecondsPerHour = 60 * 60 * 1000; // 1 hour = 60 minutes * 60 seconds * 1000 milliseconds
@@ -79,7 +77,7 @@ function scheduleFunction(intervalInHours, asyncFunc) {
   setInterval(wrapper, intervalInMilliseconds);
 }
 
-const intervalHours = 24;
+const intervalHours = 1;
 scheduleFunction(intervalHours, myFunction);
 
 
