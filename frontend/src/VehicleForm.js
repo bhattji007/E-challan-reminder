@@ -34,6 +34,9 @@ const VehicleForm = () => {
         setIsLoading(false);
         // Reset form after submission
         formRef.current.reset();
+        // formRef.current.reset();
+        setEmail(''); // Clear the email input
+        setVehicleNumber('');
       })
       .catch((error) => {
         console.error('Error sending request:', error);
