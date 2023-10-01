@@ -4,13 +4,14 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import userSchema from './models/userSchema.js';
 import Mail from './api/mail.js';
+import cors from 'cors';
 const email=[]
 const vehicle =[]
 
 const app=express();
 dotenv.config();
 app.use(express.json());
-
+app.use(cors());
 const port = 3000;
 
 mongoose.connect(process.env.MONGODB_URI,{
