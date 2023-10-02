@@ -58,16 +58,15 @@ async function myFunction() {
     const data = await userSchema.find();
     console.log("Function executed!");
 
-    const map = data.map(async (item) => {
+    for (const item of data) {
       console.log(item.vehicle, item.email);
       await Mail(item.vehicle, item.email);
-    });
-
-    await Promise.all(map);
+    }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
+
 
 function scheduleFunction(intervalInHours, asyncFunc) {
   const millisecondsPerHour = 60 * 60 * 1000;
