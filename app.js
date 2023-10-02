@@ -1,116 +1,93 @@
-
-import  express  from 'express';
+import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import userSchema from './models/userSchema.js';
 import Mail from './api/mail.js';
 import cors from 'cors';
-const email=[]
-const vehicle =[]
 
-const app=express();
+const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-const port = 3000;
+const port = process.env.PORT || 3000; // Use PORT from environment if available
 
-mongoose.connect(process.env.MONGODB_URI,{
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: 'Challan'
-}).then(()=>{
-  console.log("connected to mongoDb")
-}).catch(err => console.log(err))
+}).then(() => {
+  console.log("Connected to MongoDB");
+}).catch(err => console.error("MongoDB connection error:", err));
 
+app.post('/api', async (req, res) => {
+  try {
+    const { email, vehicle } = req.body;
+    const formattedVehicle = vehicle.toUpperCase();
 
-
-app.post('/api',async(req,res)=>{
-  try{
-  const email=req.body.email;
-  const vehicle =req.body.vehicle.toUpperCase() ;
-  if (vehicle.length !== 10){
-    res.sendStatus(405);
-    return
-  }
-    const existingData= await userSchema.find({email:email});
-    const Data= existingData.find(item => item.vehicle===vehicle);
-    if (!Data){
-    const data=await userSchema.insertMany({email, vehicle});
-    const resData = await Mail(vehicle, email);
-    console.log('Response from Mail function:', resData);
-    if (resData === 'Email sent successfully!') {
-      console.log('Mail sent successfully.');
-      res.json({message:'Email sent successfully!',code:201})
-      return
-    } else if (resData === 'No pending challans.') {
-      res.json({message:'No pending challans.',code:202})
-      return
-    } else if (resData === 'Challan details not found.') {
-      res.json({message:'Challan details not found.',code:203})
-      return
+    if (formattedVehicle.length !== 10) {
+      res.status(405).json({ message: 'Invalid vehicle number length', code: 405 });
+      return;
     }
-    else{
-      res.sendStatus(301);
-      return
-    }  
-  }
-  else{
-    res.sendStatus(403);
-    return
-  }
-  }
-  catch (e){
-    console.log(e);
+
+    const existingData = await userSchema.findOne({ email, vehicle: formattedVehicle });
+
+    if (!existingData) {
+      const newData = await userSchema.create({ email, vehicle: formattedVehicle });
+      const response = await Mail(formattedVehicle, email);
+
+      if (response === 'Email sent successfully!') {
+        res.status(201).json({ message: 'Email sent successfully!', code: 201 });
+      } else if (response === 'No pending challans.') {
+        res.status(202).json({ message: 'No pending challans.', code: 202 });
+      } else if (response === 'Challan details not found.') {
+        res.status(203).json({ message: 'Challan details not found.', code: 203 });
+      } else {
+        res.status(301).json({ message: 'Failed to send email.', code: 301 });
+      }
+    } else {
+      res.status(403).json({ message: 'User and vehicle already exist.', code: 403 });
+    }
+  } catch (e) {
+    console.error('Error:', e);
+    res.status(500).json({ message: 'Internal server error', code: 500 });
   }
 });
 
-
-
-
 async function myFunction() {
   try {
-    const data = await userSchema.find(); // Use the User model here
+    const data = await userSchema.find();
     console.log("Function executed!");
-    // console.log(data);
-    const map= data.map(async(item)=>{
-      console.log(item.vehicle,item.email);
-      await Mail(item.vehicle,item.email);
-    })
-    const datas=await  Promise.all(map);
-    // console.log(datas)
+
+    const map = data.map(async (item) => {
+      console.log(item.vehicle, item.email);
+      await Mail(item.vehicle, item.email);
+    });
+
+    await Promise.all(map);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
 
-
-
 function scheduleFunction(intervalInHours, asyncFunc) {
-  const millisecondsPerHour = 60 * 60 * 1000; // 1 hour = 60 minutes * 60 seconds * 1000 milliseconds
+  const millisecondsPerHour = 60 * 60 * 1000;
   const intervalInMilliseconds = intervalInHours * millisecondsPerHour;
 
   async function wrapper() {
     try {
-      await myFunction(); // Await the asynchronous function
+      await asyncFunc();
     } catch (error) {
       console.error("Error in scheduled function:", error);
     }
   }
 
-  wrapper(); // Call the function immediately on start
-
+  wrapper();
   setInterval(wrapper, intervalInMilliseconds);
 }
 
 const intervalHours = 1;
 scheduleFunction(intervalHours, myFunction);
 
-
-
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
-
-
-
-
