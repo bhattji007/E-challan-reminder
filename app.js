@@ -32,28 +32,31 @@ app.post('/api',async(req,res)=>{
     res.sendStatus(405);
     return
   }
+    const existingData= await userSchema.find({email:email});
+    const Data= existingData.find(item => item.vehicle===vehicle);
+    if (!Data){
+    const data=await userSchema.insertMany({email, vehicle});
     const resData = await Mail(vehicle, email);
     console.log('Response from Mail function:', resData);
     if (resData === 'Email sent successfully!') {
       console.log('Mail sent successfully.');
       res.json({message:'Email sent successfully!',code:201})
+      return
     } else if (resData === 'No pending challans.') {
       res.json({message:'No pending challans.',code:202})
+      return
     } else if (resData === 'Challan details not found.') {
       res.json({message:'Challan details not found.',code:203})
+      return
     }
     else{
       res.sendStatus(301);
       return
-    }
-    // const existingData= await userSchema.find({email:email});
-    // const Data= existingData.map(item => );
-  const data=await userSchema.insertMany({email, vehicle});
-  if (data){
-     res.sendStatus(200);
+    }  
   }
   else{
-    res.sendStatus(400);
+    res.sendStatus(403);
+    return
   }
   }
   catch (e){
@@ -73,7 +76,7 @@ async function myFunction() {
       console.log(item.vehicle,item.email);
       await Mail(item.vehicle,item.email);
     })
-    const datas= Promise.all(map);
+    const datas=await  Promise.all(map);
     // console.log(datas)
   } catch (error) {
     console.error("Error fetching data:", error);
