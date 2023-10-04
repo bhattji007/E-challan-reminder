@@ -58,7 +58,7 @@ app.post('/api', async (req, res) => {
 
 app.get('/api', async (req, res) => {
   res.sendStatus(200);
-}
+});
 
 
 async function myFunction() {
