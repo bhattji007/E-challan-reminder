@@ -53,6 +53,14 @@ app.post('/api', async (req, res) => {
   }
 });
 
+
+// health check 
+
+app.get('/api', async (req, res) => {
+  res.sendStatus(200);
+}
+
+
 async function myFunction() {
   try {
     const data = await userSchema.find();
