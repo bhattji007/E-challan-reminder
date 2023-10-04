@@ -92,7 +92,7 @@ function scheduleFunction(intervalInHours, asyncFunc) {
   setInterval(wrapper, intervalInMilliseconds);
 }
 
-const intervalHours = 1;
+const intervalHours = 24;
 scheduleFunction(intervalHours, myFunction);
 
 app.listen(port, () => {
