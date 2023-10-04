@@ -14,6 +14,8 @@ Welcome to Echallan-reminder, a project aimed at simplifying the process of stay
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
+- [Testing the current api](#Testing-the-current-api)
+- [Initial website](#Initial-website)
 - [Current Development Status and Planned Improvements](#Current-Development-Status-and-Planned-Improvements)
 - [License](#license)
 - [Contact](#contact)
@@ -99,6 +101,10 @@ Together, we can improve this tool and make a positive impact on how people mana
    email:YOUR_EMAIL,
    vehicle: YOUR_VEHICLE_NUMBER
  }
+
+
+## Initial website 
+  https://echallan-frontend.onrender.com/
   
 
 ## Current Development Status and Planned Improvements
@@ -107,7 +113,7 @@ Echallan-reminder is currently in the backend development stage, focusing on aut
 
 - [x] Implement backend automation using Node.js and Puppeteer.
 - [x] Set up email notifications using Gmail Nodemailer for pending challans.
-- [ ] **Planned:** Develop a user-friendly frontend interface for the application.
+- [x] **Planned:** Develop a user-friendly frontend interface for the application.
 - [ ] **Planned:** Implement user authentication and user accounts.
 - [ ] **Planned:** Enhance email notification templates for improved user engagement.
 - [ ] **Planned:** Implement a responsive and intuitive design for mobile users.
