@@ -2,7 +2,7 @@
 
 
 
-Welcome to Echallan-reminder, a project aimed at simplifying the process of staying updated about your active traffic challans. This tool leverages web scraping through Puppeteer to retrieve the latest details of your challans and sends you an email reminder if any of your challans are pending. By automating this process, Echallan-reminder ensures that you never miss an important challan update and helps you manage your traffic fines more efficiently.
+Welcome to Echallan-reminder, a project to simplify the process of staying updated about your active traffic challans. This tool leverages web scraping through Puppeteer to retrieve the latest details of your challans and sends you an email reminder if any of your challans are pending. By automating this process, Echallan-reminder ensures that you never miss an important challan update and helps you manage your traffic fines more efficiently.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ Welcome to Echallan-reminder, a project aimed at simplifying the process of stay
 
 ## Introduction
 
-Traffic challans are a common hassle for many individuals, and keeping track of their status can be cumbersome. Echallan-reminder aims to alleviate this issue by automating the process of checking for pending challans and notifying users via email. This project not only benefits individual users but also contributes to better traffic rule compliance and management.
+Traffic challans are a common hassle for many individuals, and keeping track of their status can be cumbersome. Echallan-reminder aims to alleviate this issue by automating the process of checking for pending challans and notifying users via email. This project benefits individual users and contributes to better traffic rule compliance and management.
 
 ## Features
 
